@@ -43,7 +43,7 @@ export function useUrlPagination({ itemsPerPage, defaultPage = 1 }: UseUrlPagina
     if (validPage !== pagination.currentPage) {
       pagination.goToPage(validPage);
     }
-  }, [validPage]);
+  }, [validPage, pagination]);
 
   return {
     ...pagination,

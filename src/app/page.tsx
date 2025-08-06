@@ -255,12 +255,12 @@ export default function Home() {
               <div className="flex flex-col md:flex-row gap-6 mb-6">
                 <div className="flex-shrink-0">
                   <div 
-                    className="bg-gray-100 rounded-lg flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300"
-                    style={{ width: '200px', aspectRatio: '2/3' }}
+                    className="bg-gray-100 rounded-lg flex items-center justify-center bg-gradient-to-br from-gray-200 to-gray-300 w-full sm:w-48 md:w-52"
+                    style={{ aspectRatio: '2/3' }}
                   >
                     <div className="text-center text-gray-500">
-                      <div className="text-6xl mb-2">🎬</div>
-                      <p className="text-sm px-2">
+                      <div className="text-4xl sm:text-6xl mb-2">🎬</div>
+                      <p className="text-xs sm:text-sm px-2">
                         {selectedMovie.genre.slice(0, 2).map(g => g.name).join(', ')}
                       </p>
                     </div>

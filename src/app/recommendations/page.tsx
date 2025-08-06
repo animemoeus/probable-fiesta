@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Pagination from '@/components/Pagination';
 import { useCursorPagination } from '@/hooks/useCursorPagination';
 
@@ -108,9 +109,11 @@ export default function RecommendationsPage() {
                   <div className="flex gap-6">
                     {movie.poster_path && (
                       <div className="w-24 h-36 bg-gray-300 border-2 border-black flex-shrink-0">
-                        <img
+                        <Image
                           src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                           alt={movie.title}
+                          width={96}
+                          height={144}
                           className="w-full h-full object-cover border-2 border-black"
                         />
                       </div>

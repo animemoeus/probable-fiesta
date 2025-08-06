@@ -12,14 +12,14 @@ interface CursorPaginationState<T> {
   hasPrevPage: boolean;
 }
 
-interface CursorPaginationActions {
+interface CursorPaginationActions<T> {
   loadNext: () => Promise<void>;
   loadPrevious: () => Promise<void>;
   reset: () => void;
-  setData: (data: { next: string | null; previous: string | null; results: any[] }) => void;
+  setData: (data: { next: string | null; previous: string | null; results: T[] }) => void;
 }
 
-export function useCursorPagination<T>(): CursorPaginationState<T> & CursorPaginationActions {
+export function useCursorPagination<T>(): CursorPaginationState<T> & CursorPaginationActions<T> {
   const [items, setItems] = useState<T[]>([]);
   const [nextUrl, setNextUrl] = useState<string | null>(null);
   const [previousUrl, setPreviousUrl] = useState<string | null>(null);
@@ -73,7 +73,7 @@ export function useCursorPagination<T>(): CursorPaginationState<T> & CursorPagin
     setLoading(false);
   }, []);
 
-  const setData = useCallback((data: { next: string | null; previous: string | null; results: any[] }) => {
+  const setData = useCallback((data: { next: string | null; previous: string | null; results: T[] }) => {
     setItems(data.results || []);
     setNextUrl(data.next);
     setPreviousUrl(data.previous);
