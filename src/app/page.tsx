@@ -90,43 +90,43 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="pt-16 pb-8 text-center">
-        <h1 className="text-4xl sm:text-5xl font-medium text-gray-900 mb-4">
-          CinemaMatch
-        </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto px-4">
-          Get personalized movie recommendations powered by AI
-        </p>
-      </div>
+        {/* Header */}
+        <div className="pt-16 pb-8 text-center">
+          <h1 className="text-4xl sm:text-5xl font-medium text-gray-900 mb-4">
+            CinemaMatch
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto px-4">
+            Get personalized movie recommendations powered by AI
+          </p>
+        </div>
 
-      {/* Search Section */}
-      <div className="max-w-3xl mx-auto px-4 mb-12">
-        <form onSubmit={handleSubmit} className="w-full">
-          <div className="flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto">
-            <input
-              id="query"
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Describe the movie you're looking for..."
-              className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              disabled={loading}
-            />
-            <button
-              type="submit"
-              disabled={loading || !query.trim()}
-              className="px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-            >
-              {loading ? 'Searching...' : 'Search'}
-            </button>
-          </div>
-        </form>
-        
-      </div>
+        {/* Search Section */}
+        <div className="max-w-3xl mx-auto px-4 mb-12">
+          <form onSubmit={handleSubmit} className="w-full">
+            <div className="flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto">
+              <input
+                id="query"
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Describe the movie you're looking for..."
+                className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                disabled={loading}
+              />
+              <button
+                type="submit"
+                disabled={loading || !query.trim()}
+                className="px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+              >
+                {loading ? 'Searching...' : 'Search'}
+              </button>
+            </div>
+          </form>
+          
+        </div>
 
-      {/* Results Section */}
-      <main className="max-w-4xl mx-auto px-4">
+        {/* Results Section */}
+        <main className="max-w-4xl mx-auto px-4">
 
         {error && (
           <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-md">
@@ -248,7 +248,7 @@ export default function Home() {
       {/* Modal */}
       {isModalOpen && selectedMovie && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 backdrop-blur-md bg-black/20 flex items-center justify-center p-4 z-50"
           onClick={closeModal}
         >
           <div 
