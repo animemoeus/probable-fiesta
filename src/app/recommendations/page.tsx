@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Pagination from '@/components/Pagination';
+import { useCursorPagination } from '@/hooks/useCursorPagination';
 
 interface Movie {
   id: string;
@@ -13,32 +15,28 @@ interface Movie {
 
 export default function RecommendationsPage() {
   const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+
+  const pagination = useCursorPagination<Movie>();
+  const { items: movies, loading, error } = pagination;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
 
-    setLoading(true);
-    setError('');
+    pagination.reset();
 
     try {
       const encodedQuery = encodeURIComponent(query);
-      const response = await fetch(`http://localhost:8000/cinematch/recommendations/?query=${encodedQuery}`);
+      const response = await fetch(`http://localhost:8000/cinematch/recommendations/?query=${encodedQuery}&count=12`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch recommendations');
       }
 
       const data = await response.json();
-      setMovies(data.movies || data || []);
+      pagination.setData(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong');
-      setMovies([]);
-    } finally {
-      setLoading(false);
+      console.error('Search error:', err);
     }
   };
 
@@ -96,9 +94,11 @@ export default function RecommendationsPage() {
 
         {movies.length > 0 && !loading && (
           <div>
-            <h2 className="text-3xl font-bold uppercase mb-6 border-b-4 border-black pb-2">
-              RECOMMENDATIONS ({movies.length})
-            </h2>
+            <div className="flex justify-between items-center mb-6 border-b-4 border-black pb-4">
+              <h2 className="text-3xl font-bold uppercase">
+                RECOMMENDATIONS ({movies.length})
+              </h2>
+            </div>
             <div className="grid gap-6">
               {movies.map((movie, index) => (
                 <div
@@ -131,6 +131,19 @@ export default function RecommendationsPage() {
                 </div>
               ))}
             </div>
+            
+            {(pagination.hasNextPage || pagination.hasPrevPage) && (
+              <div className="flex justify-center mt-8">
+                <Pagination
+                  hasNextPage={pagination.hasNextPage}
+                  hasPrevPage={pagination.hasPrevPage}
+                  onNextPage={pagination.loadNext}
+                  onPrevPage={pagination.loadPrevious}
+                  loading={loading}
+                  variant="retro"
+                />
+              </div>
+            )}
           </div>
         )}
 
