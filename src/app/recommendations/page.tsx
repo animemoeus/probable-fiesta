@@ -133,7 +133,7 @@ export default function RecommendationsPage() {
             </div>
             
             {(pagination.hasNextPage || pagination.hasPrevPage) && (
-              <div className="flex justify-center mt-8">
+              <div className="flex justify-center mt-8 mb-8">
                 <Pagination
                   hasNextPage={pagination.hasNextPage}
                   hasPrevPage={pagination.hasPrevPage}

@@ -33,7 +33,7 @@ export default function Home() {
   const { items: movies, loading, error } = pagination;
 
   const mapSimilarityToPercentage = (similarityScore: number) => {
-    const maxRealisticScore = 0.6;
+    const maxRealisticScore = 0.5;
     const percentage = Math.min(100, Math.max(0, (similarityScore / maxRealisticScore) * 100));
     return Math.round(percentage);
   };
@@ -216,7 +216,7 @@ export default function Home() {
             </div>
             
             {(pagination.hasNextPage || pagination.hasPrevPage) && (
-              <div className="flex justify-center mt-12">
+              <div className="flex justify-center mt-12 mb-12">
                 <Pagination
                   hasNextPage={pagination.hasNextPage}
                   hasPrevPage={pagination.hasPrevPage}
