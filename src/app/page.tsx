@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Pagination from '@/components/Pagination';
+import ChatGPTSearchInput from '@/components/ChatGPTSearchInput';
 import { useCursorPagination } from '@/hooks/useCursorPagination';
 
 interface Movie {
@@ -25,7 +26,6 @@ interface Movie {
 }
 
 export default function Home() {
-  const [query, setQuery] = useState('');
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -66,8 +66,7 @@ export default function Home() {
     };
   }, [isModalOpen]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (query: string) => {
     if (!query.trim()) return;
 
     pagination.reset();
@@ -101,28 +100,12 @@ export default function Home() {
         </div>
 
         {/* Search Section */}
-        <div className="max-w-3xl mx-auto px-4 mb-12">
-          <form onSubmit={handleSubmit} className="w-full">
-            <div className="flex flex-col sm:flex-row gap-2 max-w-2xl mx-auto">
-              <input
-                id="query"
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Describe the movie you're looking for..."
-                className="flex-1 px-4 py-3 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={loading}
-              />
-              <button
-                type="submit"
-                disabled={loading || !query.trim()}
-                className="px-6 py-3 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? 'Searching...' : 'Search'}
-              </button>
-            </div>
-          </form>
-          
+        <div className="px-4 mb-12">
+          <ChatGPTSearchInput
+            onSubmit={handleSubmit}
+            loading={loading}
+            placeholder="Describe the movie you're looking for..."
+          />
         </div>
 
         {/* Results Section */}
@@ -142,9 +125,9 @@ export default function Home() {
 
         {movies.length > 0 && !loading && (
           <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="mb-6">
               <h2 className="text-2xl font-medium text-gray-900">
-                Recommendations ({movies.length})
+                Recommendations
               </h2>
             </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -230,13 +213,7 @@ export default function Home() {
           </div>
         )}
 
-        {!loading && !error && movies.length === 0 && query && (
-          <div className="text-center py-16">
-            <p className="text-gray-600">No recommendations found. Try a different search.</p>
-          </div>
-        )}
-
-        {!query && !loading && (
+        {!loading && !error && movies.length === 0 && (
           <div className="text-center py-16">
             <p className="text-gray-500">
               Enter a movie description or genre to get started
